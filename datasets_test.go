@@ -68,19 +68,7 @@ func Test_getIntNormalSample(t *testing.T) {
 	}{
 		{
 			"generate 1",
-			args{
-				1,
-				1000,
-				100,
-			},
-		},
-		{
-			"generate 1000",
-			args{
-				1000,
-				20,
-				5,
-			},
+			args{100, 120, 30},
 		},
 	}
 	for _, tt := range tests {
@@ -88,6 +76,74 @@ func Test_getIntNormalSample(t *testing.T) {
 			got := getIntNormalSample(tt.args.n, tt.args.mu, tt.args.sigma2)
 			if len(got) != tt.args.n {
 				t.Errorf("getIntNormalSample() = %v, want %v", len(got), tt.args.n)
+			}
+			for _, val := range got {
+				if val < 1 {
+					t.Errorf("getIntNormalSample() off limits = %v", val)
+				}
+			}
+		})
+	}
+}
+
+func Test_getIntGammaSample(t *testing.T) {
+	type args struct {
+		n, fact, alpha, beta int
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			"Testing just the limits",
+			args{100, 120, 2, 2},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := getIntGammaSample(tt.args.n, tt.args.fact, tt.args.alpha, tt.args.beta)
+
+			if len(got) != tt.args.n {
+				t.Errorf("getIntGammaSample() = %v, want %v", len(got), tt.args.n)
+			}
+			for _, val := range got {
+				if val < 1 {
+					t.Errorf("getIntGammaSample() off limits = %v", val)
+				}
+			}
+		})
+	}
+}
+
+func Test_getIntBetaSample(t *testing.T) {
+	type args struct {
+		n, fact, alpha, beta int
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			"Testing just the limits",
+			args{
+				100,
+				130,
+				30,
+				2,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := getIntBetaSample(tt.args.n, tt.args.fact, tt.args.alpha, tt.args.beta)
+			if len(got) != tt.args.n {
+				t.Errorf("getIntBetaSample() = %v, want %v", len(got), tt.args.n)
+			}
+
+			for _, val := range got {
+				if val < 1 {
+					t.Errorf("getIntBetaSample() off limits = %v", val)
+				}
 			}
 		})
 	}
