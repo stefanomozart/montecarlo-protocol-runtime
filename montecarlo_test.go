@@ -49,27 +49,3 @@ func TestExperimentType2(t *testing.T) {
 		})
 	}
 }
-
-func TestExperimentType3(t *testing.T) {
-	tests := []struct {
-		name string
-		m    int //number of repetitions
-		n    int // fixed size of the dataset
-	}{
-		{
-			"run the experiment once, just to check file the boilerplate code",
-			1,
-			150,
-		},
-		{
-			"run the experiment 5 more times, just to check file the boilerplate code",
-			5,
-			150,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			ExperimentType3(tt.m, tt.n)
-		})
-	}
-}
