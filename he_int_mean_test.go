@@ -46,7 +46,13 @@ func TestIntMeanWithHE_Run(t *testing.T) {
 		{
 			"test with extremely small dataset",
 			1024,
-			[]int64{2, 2, 4, 4},
+			[]int64{2, 2, 3, 3, 4, 4},
+			false,
+		},
+		{
+			"test with extremely small dataset",
+			1024,
+			[]int64{2, 2, 2, 2, 4, 4, 4, 4},
 			false,
 		},
 		{
@@ -62,6 +68,7 @@ func TestIntMeanWithHE_Run(t *testing.T) {
 			false,
 		},
 	}
+
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			simullation := NewIntMeanWithHE(tt.bitlen)
